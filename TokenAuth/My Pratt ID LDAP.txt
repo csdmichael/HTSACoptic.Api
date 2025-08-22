@@ -1,0 +1,55 @@
+{LdapAttribute: {type='cn', value='MichaelMagdyKame KamelYaacoub'}}
+{LdapAttribute: {type='exchangeDirectoryName', value='8131061'}}
+{LdapAttribute: {type='c', value='US'}}
+{LdapAttribute: {type='city', value='East Hartford'}}
+{LdapAttribute: {type='locationName', value='East Hartford'}}
+{LdapAttribute: {type='street', value='400 Main Street'}}
+{LdapAttribute: {type='utcCompanyCode', value='PWS'}}
+{LdapAttribute: {type='memberOf', values='pw_contractor','CORP_ProofPoint','PW_ALL_Employees','pw_contractor_usa','pw_pwcitizenship_usa','pw_authorizeduser','pw_linesheets_support','pw_linesheets_clr_members'}}
+{LdapAttribute: {type='directorynameuniqueid', value='8131061'}}
+{LdapAttribute: {type='zipCode', value='06118'}}
+{LdapAttribute: {type='ex2003DN', value='CN=xvic213_pw_u,OU=User Accounts,OU=US-CT-Ehartford,OU=PWUS,OU=NADOM,DC=utcmail,DC=com'}}
+{LdapAttribute: {type='pwCitizenship', value='usa'}}
+{LdapAttribute: {type='alternateEmailAddress', value='MichaelMagdyKame.KamelYaacoub@pw.utc.com'}}
+{LdapAttribute: {type='uid', value='XVIC213'}}
+{LdapAttribute: {type='utcCASSid', value='XVIC213'}}
+{LdapAttribute: {type='utcManagerDN', value='utcuniqueid=6797930,ou=utcWorker,o=utc.com'}}
+{LdapAttribute: {type='knownAsSN', value='KamelYaacoub'}}
+{LdapAttribute: {type='proxyemail', value='MichaelMagdyKame.KamelYaacoub@pw.utc.com'}}
+{LdapAttribute: {type='utcUserName', value='XVIC213'}}
+{LdapAttribute: {type='locationcode', value='PW100'}}
+{LdapAttribute: {type='st', value='CT'}}
+{LdapAttribute: {type='displayName', value='KamelYaacoub, MichaelMagdyKame  Virtusa Corporation'}}
+{LdapAttribute: {type='objectClass', values='utcworker','inetOrgPerson','organizationalPerson','person','top'}}
+{LdapAttribute: {type='employmentStatus', value='A'}}
+{LdapAttribute: {type='divisionCode', value='PW'}}
+{LdapAttribute: {type='effectivestartdate', value='08/29/2016'}}
+{LdapAttribute: {type='ex2003OU', value='OU=US-CT-Ehartford,OU=PWUS,OU=NADOM'}}
+{LdapAttribute: {type='departmentCode', value='PWS014387'}}
+{LdapAttribute: {type='exportControl', value='no'}}
+{LdapAttribute: {type='exchangeDN', value='/o=utc/ou=exchange2003/cn=recipients/cn=8131061'}}
+{LdapAttribute: {type='Mapi-Recipient', value='1'}}
+{LdapAttribute: {type='utcUniqueID', value='8131061'}}
+{LdapAttribute: {type='exchangeDomain', value='utcmail.com'}}
+{LdapAttribute: {type='exchangesiteCode', value='EX2003'}}
+{LdapAttribute: {type='sn', value='KamelYaacoub'}}
+{LdapAttribute: {type='mail', value='MichaelMagdyKame.KamelYaacoub@pw.utc.com'}}
+{LdapAttribute: {type='aceuserid', value='xvic213'}}
+{LdapAttribute: {type='departmentName', value='IT MRO Overhaul'}}
+{LdapAttribute: {type='NTDomain', value='pw_u'}}
+{LdapAttribute: {type='utcSimManaged', value='yes'}}
+{LdapAttribute: {type='postalAddress', value='400 Main Street$East Hartford,CT 06118'}}
+{LdapAttribute: {type='CDStatus', value='CONT'}}
+{LdapAttribute: {type='AssignmentEndDate', value='06/29/2017'}}
+{LdapAttribute: {type='givenName', value='MichaelMagdyKame'}}
+{LdapAttribute: {type='divisionName', value='Pratt & Whitney'}}
+{LdapAttribute: {type='mailSystemType', value='MsExchange2003'}}
+{LdapAttribute: {type='utcCompanyName', value='United Technologies Corp'}}
+{LdapAttribute: {type='exchObjectClass', value='mailbox'}}
+{LdapAttribute: {type='knownAsGivenName', value='MichaelMagdyKame'}}
+{LdapAttribute: {type='NTDomainUid', value='xvic213'}}
+{LdapAttribute: {type='companyName', value='Virtusa Corporation'}}
+
+
+
+

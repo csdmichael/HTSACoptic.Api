@@ -1,0 +1,12 @@
+2019-09-03T04:36:25.7669541-04:00 0HLPG977769Q7:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5885/  0 (ca22a1cb)
+2019-09-03T04:36:25.7669541-04:00 0HLPG977769Q8:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:5885/calendar/getgroupedeventsfromdb   (ca22a1cb)
+2019-09-03T04:36:26.8964904-04:00 0HLPG977769Q7:00000001 [INF] Request finished in 1161.9271ms 404  (791a596a)
+2019-09-03T04:36:26.9091312-04:00 0HLPG977769Q8:00000001 [INF] Route matched with "{action = \"GetGroupedEventsFromDB\", controller = \"Calendar\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetGroupedEventsFromDB()" on controller "HTSA.Controllers.CalendarController" ("CP.API"). (122b2fdf)
+2019-09-03T04:36:27.4002997-04:00 0HLPG977769Q8:00000001 [INF] Executing action method "HTSA.Controllers.CalendarController.GetGroupedEventsFromDB (CP.API)" - Validation state: Valid (dad538d7)
+2019-09-03T04:36:27.8574928-04:00 0HLPG977769Q8:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-09-03T04:36:28.8492300-04:00 0HLPG977769Q8:00000001 [INF] Executed DbCommand ("139"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""exec CLNDR.SP_Event_Get" (0723d8ff)
+2019-09-03T04:36:29.1907763-04:00 0HLPG977769Q8:00000001 [INF] Executed action method "HTSA.Controllers.CalendarController.GetGroupedEventsFromDB (CP.API)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1781.2186ms. (50a9e262)
+2019-09-03T04:36:29.2835145-04:00 0HLPG977769Q8:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2019-09-03T04:36:29.3799152-04:00 0HLPG977769Q8:00000001 [INF] Executed action "HTSA.Controllers.CalendarController.GetGroupedEventsFromDB (CP.API)" in 2455.7971ms (afa2e885)
+2019-09-03T04:36:29.4021141-04:00 0HLPG977769Q8:00000001 [INF] Request finished in 3677.691ms 200 text/plain; charset=utf-8 (791a596a)

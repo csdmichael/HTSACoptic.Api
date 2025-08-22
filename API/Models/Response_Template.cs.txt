@@ -1,0 +1,24 @@
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using HTSA.Repositories;
+//----------------------------------------------------------
+//-- Author: Michael Yaacoub
+//-- Email: csdmichael@gmail.com
+//----------------------------------------------------------
+namespace HTSA.Models
+{
+    public class {OBJ}sResponse
+    {
+        public AuthResponse authResponse { get; set; }
+        public string parentURL { get; set; }
+        public int {OBJ}sListCount { get; set; }
+        public List<{OBJ}> {OBJ}sList { get; set; }
+        
+
+    }
+
+
+}

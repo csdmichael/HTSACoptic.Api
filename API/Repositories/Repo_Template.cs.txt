@@ -1,0 +1,86 @@
+﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+using HTSA.Models;
+using System;
+//----------------------------------------------------------
+//-- Author: Michael Yaacoub
+//-- Email: csdmichael@gmail.com
+//----------------------------------------------------------
+
+namespace HTSA.Repositories
+{
+    public class {REPO}Repository : I{OBJ}Repository
+    {
+        ILogger _logger;
+        ApplContext _context;
+        ITokenInfoRepository _tokenInfoRepository;
+
+        public {OBJ}Repository(ApplContext context, ILogger<{OBJ}Repository> logger, ITokenInfoRepository tokenInfoRepository)
+        {
+            _logger = logger;
+            _context = context;
+            _tokenInfoRepository = tokenInfoRepository;
+        }
+
+       
+        public {OBJ}sResponse Get{OBJ}s(string baseURL, string token, string churchID)
+        {
+            //----------------------------------------------------------
+            //-- Michael Yaacoub - 10/06/2017
+            //-- csdmichael@gmail.com
+            //----------------------------------------------------------
+            {OBJ}sResponse {obj}sResp = new {OBJ}sResponse();
+            var lst{OBJ}s = new List<{OBJ}>();
+
+            try
+            {
+                AuthResponse auth = _tokenInfoRepository.VerifyToken(token, "Get{OBJ}s", "");
+                {obj}sResp.authResponse = auth;
+
+                if (auth.success)
+                {
+                    string sqlQuery;
+		    int paramCnt = 0;
+
+                    sqlQuery = @"exec {SP}";
+
+		    if ({Param} != null && {Param}.Trim() != "")
+                    {
+                        if (paramCnt > 0)
+                            sqlQuery += ", ";
+                        sqlQuery += " @{Param} = '" + {Param} + "'";
+                        paramCnt++;
+                    }
+                    
+
+                    var rdr = _context.Database.ExecuteSqlQuery(sqlQuery);
+
+                    while (rdr.DbDataReader.Read())
+                    {
+                        {OBJ} obj = new {OBJ}();
+
+						//Read fields from DataReader
+						//-----------------------------
+                        
+
+                        lst{OBJ}s.Add({obj});
+                    }
+                    rdr.DbDataReader.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                _context.Database.ExecuteSqlQuery(@"
+				exec [LOGS].[SP_LogApplicationMsg] @Type='ERROR', @Message='" + ex.Message + "', @Module='{REPO}Repository.Get{OBJ}s'");
+            }
+            {obj}sResp.{OBJ}sList = lst{OBJ}s;
+            {obj}sResp.{OBJ}sListCount = lst{OBJ}s.Count;
+            return {obj}sResp;
+        }
+
+        
+
+    }
+}

@@ -1,0 +1,31 @@
+﻿//----------------------------------------------------------
+//-- Author: Michael Yaacoub
+//-- Email: csdmichael@gmail.com
+//----------------------------------------------------------
+namespace HTSA.Models
+{
+
+    public class FavVerse
+    {
+        
+        public string VerseID { get; set; }
+        public string PersonID { get; set; }
+        public int TotalSentCount { get; set; }
+        public string Verse { get; set; }
+        public string VerseArabic { get; set; }
+        public string VerseNum { get; set; }
+        public string ChapterNum { get; set; }
+        public string Testament { get; set; }
+        public string TestamentArabic { get; set; }
+        public string BookName { get; set; }
+        public string BookNameArabic { get; set; }
+        public string BookCode { get; set; }
+        public string BookID { get; set; }
+        public string Created { get; set; }
+        public string PersonIds { get; set; }
+        public string PersonPics { get; set; }
+        public string PersonDisplayNames { get; set; }
+        public int FavBy { get; set; }
+
+    }
+}
