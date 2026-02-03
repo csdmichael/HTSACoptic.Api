@@ -8,7 +8,6 @@ using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using System.IO;
 using System.Threading;
-using Microsoft.EntityFrameworkCore.Storage;
 using Google.Apis.Util.Store;
 
 //----------------------------------------------------------
@@ -93,7 +92,7 @@ namespace HTSA.Repositories
 
             try
             {
-                RelationalDataReader dr = _context.Database.ExecuteSqlQuery(sqlQuery);
+                var dr = _context.Database.ExecuteSqlQuery(sqlQuery);
 
                 if (dr.DbDataReader.HasRows)
                 {
@@ -358,7 +357,7 @@ namespace HTSA.Repositories
                 sqlQuery = @"exec CLNDR.SP_Event_STG_ClearAll";
                 //int paramCnt = 0;
 
-                RelationalDataReader dr = _context.Database.ExecuteSqlQuery(sqlQuery);
+                var dr = _context.Database.ExecuteSqlQuery(sqlQuery);
                 dr.Dispose();
                 
                 foreach(CalEvent currEvent in lstCalEvents)

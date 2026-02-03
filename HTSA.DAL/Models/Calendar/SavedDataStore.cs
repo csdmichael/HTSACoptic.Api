@@ -66,7 +66,7 @@ namespace HTSA.Models
             {
                 this._storedResponse.Issued = (string)test;
             }
-            return TaskEx.Delay(0);
+            return Task.Delay(0);
         }
 
         /// 
@@ -76,7 +76,7 @@ namespace HTSA.Models
         public Task DeleteAsync<T>(string key)
         {
             this._storedResponse = new StoredResponse();
-            return TaskEx.Delay(0);
+            return Task.Delay(0);
         }
 
         /// 
@@ -105,7 +105,7 @@ namespace HTSA.Models
         public Task ClearAsync()
         {
             this._storedResponse = new StoredResponse();
-            return TaskEx.Delay(0);
+            return Task.Delay(0);
         }
 
         ///// Creates a unique stored key based on the key and the class type.

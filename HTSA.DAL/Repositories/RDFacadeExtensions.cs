@@ -1,54 +1,99 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Data;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace HTSA.Repositories
 {
-    public static class RDFacadeExtensions
+    /// <summary>
+    /// Wrapper class to maintain compatibility with existing code that used RelationalDataReader.DbDataReader
+    /// </summary>
+    public class DataReaderWrapper : IDisposable
     {
+        public DbDataReader DbDataReader { get; }
+        private readonly DbConnection _connection;
+        private readonly bool _ownsConnection;
 
-        public static RelationalDataReader ExecuteSqlQuery(this DatabaseFacade databaseFacade, string sql, params object[] parameters)
+        public DataReaderWrapper(DbDataReader reader, DbConnection connection = null, bool ownsConnection = false)
         {
-            var concurrencyDetector = databaseFacade.GetService<IConcurrencyDetector>();
-
-            using (concurrencyDetector.EnterCriticalSection())
-            {
-                var rawSqlCommand = databaseFacade
-                    .GetService<IRawSqlCommandBuilder>()
-                    .Build(sql, parameters);
-
-                return rawSqlCommand
-                    .RelationalCommand
-                    .ExecuteReader(
-                        databaseFacade.GetService<IRelationalConnection>(),
-                        parameterValues: rawSqlCommand.ParameterValues);
-            }
+            DbDataReader = reader;
+            _connection = connection;
+            _ownsConnection = ownsConnection;
         }
 
-        public static async Task<RelationalDataReader> ExecuteSqlCommandAsync(this DatabaseFacade databaseFacade,
+        public void Dispose()
+        {
+            DbDataReader?.Dispose();
+            if (_ownsConnection && _connection != null)
+            {
+                _connection.Dispose();
+            }
+        }
+    }
+
+    public static class RDFacadeExtensions
+    {
+        public static DataReaderWrapper ExecuteSqlQuery(this DatabaseFacade databaseFacade, string sql, params object[] parameters)
+        {
+            var connection = databaseFacade.GetDbConnection();
+            var connectionOpened = false;
+            
+            if (connection.State != ConnectionState.Open)
+            {
+                connection.Open();
+                connectionOpened = true;
+            }
+
+            var command = connection.CreateCommand();
+            command.CommandText = sql;
+
+            if (parameters != null)
+            {
+                foreach (var param in parameters)
+                {
+                    if (param is DbParameter dbParam)
+                    {
+                        command.Parameters.Add(dbParam);
+                    }
+                }
+            }
+
+            var reader = command.ExecuteReader(connectionOpened ? CommandBehavior.CloseConnection : CommandBehavior.Default);
+            return new DataReaderWrapper(reader, connection, connectionOpened);
+        }
+
+        public static async Task<DataReaderWrapper> ExecuteSqlCommandAsync(this DatabaseFacade databaseFacade,
                                                              string sql,
                                                              CancellationToken cancellationToken = default(CancellationToken),
                                                              params object[] parameters)
         {
+            var connection = databaseFacade.GetDbConnection();
+            var connectionOpened = false;
 
-            var concurrencyDetector = databaseFacade.GetService<IConcurrencyDetector>();
-
-            using (concurrencyDetector.EnterCriticalSection())
+            if (connection.State != ConnectionState.Open)
             {
-                var rawSqlCommand = databaseFacade
-                    .GetService<IRawSqlCommandBuilder>()
-                    .Build(sql, parameters);
-
-                return await rawSqlCommand
-                    .RelationalCommand
-                    .ExecuteReaderAsync(
-                        databaseFacade.GetService<IRelationalConnection>(),
-                        parameterValues: rawSqlCommand.ParameterValues,
-                        cancellationToken: cancellationToken);
+                await connection.OpenAsync(cancellationToken);
+                connectionOpened = true;
             }
-        }
 
+            var command = connection.CreateCommand();
+            command.CommandText = sql;
+
+            if (parameters != null)
+            {
+                foreach (var param in parameters)
+                {
+                    if (param is DbParameter dbParam)
+                    {
+                        command.Parameters.Add(dbParam);
+                    }
+                }
+            }
+
+            var reader = await command.ExecuteReaderAsync(connectionOpened ? CommandBehavior.CloseConnection : CommandBehavior.Default, cancellationToken);
+            return new DataReaderWrapper(reader, connection, connectionOpened);
+        }
     }
 }

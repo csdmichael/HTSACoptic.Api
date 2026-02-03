@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using HTSA.Repositories;
 using Microsoft.IdentityModel.Tokens;
@@ -26,17 +25,12 @@ namespace HTSA
         private RsaSecurityKey key;
         private TokenAuthOptions tokenOptions;
 
-        public Startup(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
+        public IConfiguration Configuration { get; }
 
-        public IConfigurationRoot Configuration { get; }
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -117,14 +111,16 @@ namespace HTSA
             services.AddTransient<IFileRepository, FileRepository>();
             //--End-----------------------------------------------
 
-            services.Add(new ServiceDescriptor(typeof(IConfigurationRoot), Configuration));
-            services.Configure<IISOptions>(options =>
-            {
-                options.AutomaticAuthentication = true;
-            });
+            services.Add(new ServiceDescriptor(typeof(IConfiguration), Configuration));
             services.AddLogging();
             services.AddRouting();
-            services.AddMvc();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Include;
+                    options.SerializerSettings.Formatting = Formatting.Indented;
+                });
             services.AddCors();
 
             services.AddDbContext<TokenAuth.Data.AuthContext>(options =>
@@ -136,10 +132,8 @@ namespace HTSA
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(WebApplication app, IWebHostEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging")).AddDebug().AddFile("logs/lsapi-{Date}.txt");
-            loggerFactory.AddDebug();
 
             // Register a simple error handler to catch token expiries and change them to a 401, 
             // and return all other errors as a 500. This should almost certainly be improved for
@@ -195,22 +189,16 @@ namespace HTSA
             */
 
             app.UseCors(builder => builder
-                //.WithOrigins("http://*")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowAnyOrigin()
-                .AllowCredentials());
+                .AllowAnyOrigin());
 
-            app.UseMvcWithDefaultRoute();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.MapControllers();
 
             app.UseStaticFiles();
-
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                DefaultValueHandling = DefaultValueHandling.Include,
-                Formatting = Formatting.Indented
-            };
         }
     }
 }

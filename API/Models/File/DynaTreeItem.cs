@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.File;
 
 namespace HTSA.Models
 {

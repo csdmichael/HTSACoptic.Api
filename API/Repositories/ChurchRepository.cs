@@ -4,7 +4,6 @@ using HTSA.Models;
 using System;
 using TokenAuth.Repositories;
 using TokenAuth.Models;
-using Microsoft.EntityFrameworkCore.Storage;
 using System.Threading.Tasks;
 using HTSA.API.Models;
 //----------------------------------------------------------
@@ -172,7 +171,7 @@ namespace HTSA.Repositories
             //-- csdmichael@gmail.com
             //----------------------------------------------------------
             UpdateResponse updateResp = new UpdateResponse();
-            RelationalDataReader rdr = null;
+            DataReaderWrapper rdr = null;
 
             try
             {
